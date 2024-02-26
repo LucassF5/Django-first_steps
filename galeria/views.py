@@ -13,3 +13,14 @@ def imagem(request, foto_id):
     # Vai receber o id da foto e buscar a foto no banco de dados
     # Caso não encontre, retorna um erro 404
     return render(request, "galeria/imagem.html", {"fotografia": fotografia})
+
+def buscar(request):
+    fotografias = Fotografia.objects.order_by('-id').filter(publicada=True) 
+
+    if "buscar" in request.GET:
+        nome_a_buscar = request.GET["buscar"]
+        if nome_a_buscar:
+            fotografias = fotografias.filter(nome__icontains=nome_a_buscar)
+            # Vai buscar as fotos que contém o nome digitado na barra de busca
+
+    return render(request, "galeria/buscar.html", {"cards": fotografias})
