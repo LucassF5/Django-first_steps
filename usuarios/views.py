@@ -1,10 +1,13 @@
 from django.shortcuts import render
+from usuarios.forms import LoginForms, CadastroForms
 
 def login(request):
-    return render(request, "usuarios/login.html")
+    form = LoginForms() # Instancia o formulário
+    return render(request, "usuarios/login.html", {"form": form})
 
 def cadastro(request):
-    return render(request, "usuarios/cadastro.html")
+    form = CadastroForms()
+    return render(request, "usuarios/cadastro.html", {"form": form})
 
 # The views are the functions that will be called when the user accesses the URL.
 # The function receives a request object and returns a response object.
