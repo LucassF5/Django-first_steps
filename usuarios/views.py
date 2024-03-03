@@ -38,10 +38,11 @@ def cadastro(request):
         form = CadastroForms(request.POST)
 
         if form.is_valid():
-            if form['senha_1'].value() != form['senha_2'].value():
-                messages.error(request, "As senhas não são iguais")
-                # Redireciona para a página de cadastro
-                return redirect("cadastro")
+                    #    SENHAS VALIDADAS NO FORMS.PY
+            # if form['senha_1'].value() != form['senha_2'].value():
+            #     messages.error(request, "As senhas não são iguais")
+            #     # Redireciona para a página de cadastro
+            #     return redirect("cadastro")
 
             nome = form['nome_cadastro'].value()
             email = form['email'].value()
@@ -50,6 +51,10 @@ def cadastro(request):
             # Verifica se o usuário já existe
             if User.objects.filter(username=nome).exists():
                 messages.error(request, "Usuário já existente")
+                return redirect("cadastro")
+            
+            if User.objects.filter(email=email).exists():
+                messages.error(request, "Email já existente")
                 return redirect("cadastro")
 
             usuario = User.objects.create_user(  # Cria um usuário
