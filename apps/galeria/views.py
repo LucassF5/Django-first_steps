@@ -34,4 +34,10 @@ def buscar(request):
             fotografias = fotografias.filter(nome__icontains=nome_a_buscar)
             # Vai buscar as fotos que contém o nome digitado na barra de busca
 
-    return render(request, "galeria/buscar.html", {"cards": fotografias})
+    return render(request, "galeria/index.html", {"cards": fotografias})
+
+def filtro(request, categoria):
+    fotografias = Fotografia.objects.order_by('data_fotografia').filter(publicada=True, categoria=categoria)
+    # Vai buscar as fotos que contém a categoria digitada na barra de busca
+
+    return render(request, "galeria/index.html", {"cards": fotografias})
